@@ -4,3 +4,9 @@ frontend/node_modules
 frontend/.env
 *.log
 backend/nul
+frontend/package-lock.json
+
+backend/dist
+backend/tmp_uploads
+backend/local_gcs
+.DS_Store

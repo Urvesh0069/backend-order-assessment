@@ -1,0 +1,61 @@
+.auth-wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+
+/* Left showcase panel */
+.auth-aside {
+  background: linear-gradient(150deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+  color: #fff;
+  padding: 56px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.auth-aside::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 80% 10%, rgba(255,255,255,0.16), transparent 60%),
+    radial-gradient(500px 300px at 10% 90%, rgba(255,255,255,0.1), transparent 55%);
+}
+.auth-aside > * { position: relative; z-index: 1; }
+.auth-logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
+.auth-logo-mark {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: rgba(255,255,255,0.16);
+  display: grid; place-items: center;
+  backdrop-filter: blur(6px);
+}
+.auth-hero h1 { font-size: 34px; line-height: 1.15; letter-spacing: -0.03em; }
+.auth-hero p { margin-top: 16px; font-size: 16px; color: rgba(255,255,255,0.82); max-width: 420px; line-height: 1.6; }
+.auth-points { margin-top: 30px; display: flex; flex-direction: column; gap: 14px; }
+.auth-point { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: rgba(255,255,255,0.9); }
+.auth-point .tick {
+  width: 24px; height: 24px; border-radius: 7px;
+  background: rgba(255,255,255,0.18); display: grid; place-items: center; flex-shrink: 0;
+}
+.auth-foot { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+/* Right form panel */
+.auth-form-panel {
+  display: grid;
+  place-items: center;
+  padding: 40px 32px;
+  background: var(--bg);
+}
+.auth-card { width: 100%; max-width: 400px; }
+.auth-card h2 { font-size: 25px; letter-spacing: -0.02em; }
+.auth-card .sub { color: var(--text-muted); margin-top: 6px; margin-bottom: 26px; }
+.auth-switch { margin-top: 22px; text-align: center; color: var(--text-muted); font-size: 14px; }
+
+.pw-hint { font-size: 12.5px; color: var(--text-faint); }
+
+@media (max-width: 900px) {
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-aside { display: none; }
+}

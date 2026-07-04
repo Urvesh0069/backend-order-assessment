@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 import { getPoolByShardId } from '../config/db';
 
 interface OrderRecord {
-  order_id?: string;
+  order_id: string;
   customer_id: string;
   order_date: string;
   order_amount: number;
@@ -12,8 +12,8 @@ interface OrderRecord {
 export async function batchInsertOrders(
   shardId: number,
   records: OrderRecord[]
-): Promise<void> {
-  if (records.length === 0) return;
+): Promise<number> {
+  if (records.length === 0) return 0;
 
   const pool: Pool = getPoolByShardId(shardId);
   const client = await pool.connect();
@@ -21,25 +21,26 @@ export async function batchInsertOrders(
   try {
     await client.query('BEGIN');
 
-    // Build a multi-row INSERT: ($1,$2,$3,$4), ($5,$6,$7,$8), ...
     const values: any[] = [];
     const placeholders: string[] = [];
 
     records.forEach((r, i) => {
-      const offset = i * 4;
+      const offset = i * 5;
       placeholders.push(
-        `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4})`
+        `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5})`
       );
-      values.push(r.customer_id, r.order_date, r.order_amount, r.status);
+      values.push(r.order_id, r.customer_id, r.order_date, r.order_amount, r.status);
     });
 
     const query = `
-      INSERT INTO orders (customer_id, order_date, order_amount, status)
+      INSERT INTO orders (order_id, customer_id, order_date, order_amount, status)
       VALUES ${placeholders.join(', ')}
+      ON CONFLICT (order_id) DO NOTHING
     `;
 
-    await client.query(query, values);
+    const result = await client.query(query, values);
     await client.query('COMMIT');
+    return result.rowCount ?? 0;
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -62,9 +63,6 @@ export async function insertFailedRow(
 }
 
 export async function findOrderById(orderId: string) {
-  // We don't know which shard this order lives on just from the ID,
-  // since we shard by customer_id, not order_id.
-  // For the assessment scope, fan out across all shards and return the first match.
   const { getShardCount, getPoolByShardId } = await import('../config/db');
   const shardCount = getShardCount();
 
@@ -79,6 +77,26 @@ export async function findOrderById(orderId: string) {
     }
   }
   return null;
+}
+
+export async function findAllOrders(limit: number = 100) {
+  const { getShardCount, getPoolByShardId } = await import('../config/db');
+  const shardCount = getShardCount();
+
+  const perShard = await Promise.all(
+    Array.from({ length: shardCount }, (_, i) =>
+      getPoolByShardId(i).query(
+        'SELECT * FROM orders ORDER BY order_date DESC LIMIT $1',
+        [limit]
+      )
+    )
+  );
+
+  const merged = perShard.flatMap((r) => r.rows);
+  merged.sort(
+    (a, b) => new Date(b.order_date).getTime() - new Date(a.order_date).getTime()
+  );
+  return merged.slice(0, limit);
 }
 
 export async function findOrdersByCustomerId(customerId: string) {

@@ -9,8 +9,7 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
   const authHeader = req.headers.authorization;
 
   if (!authHeader || typeof authHeader !== 'string') {
-    req.userId = 'anonymous';
-    return next();
+    return res.status(401).json({ error: 'Authorization header is required' });
   }
 
   if (!authHeader.startsWith('Bearer ')) {
