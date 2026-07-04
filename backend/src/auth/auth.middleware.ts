@@ -8,12 +8,16 @@ export interface AuthRequest extends Request {
 export function requireAuth(req: AuthRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader || typeof authHeader !== 'string') {
+    req.userId = 'anonymous';
+    return next();
+  }
+
+  if (!authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Missing or invalid Authorization header' });
   }
 
-  const parts = authHeader.split(' ');
-  const token = parts[1];
+  const token = authHeader.slice(7).trim();
 
   if (!token) {
     return res.status(401).json({ error: 'Missing or invalid Authorization header' });

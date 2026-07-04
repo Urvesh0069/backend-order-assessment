@@ -37,6 +37,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
+    "ignoreDeprecations": "6.0",
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
