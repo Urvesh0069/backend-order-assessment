@@ -1,4 +1,4 @@
-/* ---------- Stat tiles ---------- */
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -23,7 +23,6 @@
 .stat-value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-top: 12px; }
 .stat-label { color: var(--text-muted); font-size: 13.5px; margin-top: 2px; }
 
-/* ---------- Quick action cards ---------- */
 .qa-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -53,7 +52,6 @@
 
 .section-title { font-size: 17px; font-weight: 650; margin-bottom: 14px; }
 
-/* ---------- Dropzone ---------- */
 .dropzone {
   border: 2px dashed var(--border-strong);
   border-radius: var(--radius);
@@ -78,7 +76,6 @@
   border-radius: 7px; background: var(--slate-soft); color: var(--slate);
 }
 
-/* selected file preview */
 .file-preview {
   display: flex; align-items: center; gap: 14px;
   padding: 16px 18px;
@@ -93,16 +90,13 @@
 .file-name { font-weight: 600; }
 .file-meta { color: var(--text-faint); font-size: 13px; }
 
-/* progress bar */
 .progress { height: 8px; border-radius: 999px; background: var(--slate-soft); overflow: hidden; }
 .progress > span { display: block; height: 100%; background: var(--brand); border-radius: 999px; transition: width 0.2s ease; }
 
-/* ---------- Lookup ---------- */
 .lookup-bar { display: flex; gap: 10px; }
 .lookup-bar .input { flex: 1; }
 @media (max-width: 560px) { .lookup-bar { flex-direction: column; } }
 
-/* order detail key-value grid */
 .kv-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

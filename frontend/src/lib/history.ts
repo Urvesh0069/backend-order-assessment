@@ -2,7 +2,7 @@ import type { UploadResult } from '../api/types';
 
 export interface UploadHistoryEntry extends UploadResult {
   fileName: string;
-  at: number; // epoch ms
+  at: number;
 }
 
 const KEY = 'orders_upload_history';

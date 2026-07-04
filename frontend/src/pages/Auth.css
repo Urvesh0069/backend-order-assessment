@@ -4,7 +4,6 @@
   grid-template-columns: 1.05fr 1fr;
 }
 
-/* Left showcase panel */
 .auth-aside {
   background: linear-gradient(150deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
   color: #fff;
@@ -41,7 +40,6 @@
 }
 .auth-foot { font-size: 13px; color: rgba(255,255,255,0.65); }
 
-/* Right form panel */
 .auth-form-panel {
   display: grid;
   place-items: center;

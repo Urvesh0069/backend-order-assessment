@@ -1,27 +1,22 @@
-/* ============================================================
-   Orders Console — Design System (Light / White theme)
-   ============================================================ */
+
 
 :root {
-  /* Brand */
+
   --brand: #2563eb;
   --brand-hover: #1d4ed8;
   --brand-soft: #eff4ff;
   --brand-ring: rgba(37, 99, 235, 0.35);
 
-  /* Surfaces */
   --bg: #f6f8fb;
   --surface: #ffffff;
   --surface-2: #fbfcfe;
   --border: #e6e9ef;
   --border-strong: #d3d8e2;
 
-  /* Text */
   --text: #10151f;
   --text-muted: #5b6472;
   --text-faint: #8a93a3;
 
-  /* Status */
   --green: #16a34a;
   --green-soft: #e9f7ef;
   --amber: #d97706;
@@ -33,7 +28,6 @@
   --violet: #7c3aed;
   --violet-soft: #f2ecfe;
 
-  /* Effects */
   --radius: 14px;
   --radius-sm: 9px;
   --shadow-sm: 0 1px 2px rgba(16, 21, 31, 0.06);
@@ -62,7 +56,6 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 
-/* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -88,7 +81,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 .btn-block { width: 100%; }
 .btn-lg { padding: 13px 20px; font-size: 15px; }
 
-/* ---------- Inputs ---------- */
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field label {
   font-size: 13px; font-weight: 600; color: var(--text-muted);
@@ -113,7 +105,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 .input-group { display: flex; gap: 10px; }
 .input-group .input { flex: 1; }
 
-/* ---------- Cards ---------- */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -122,7 +113,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 }
 .card-pad { padding: 22px; }
 
-/* ---------- Badges ---------- */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -142,7 +132,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 .badge-violet { background: var(--violet-soft); color: var(--violet); }
 .badge-blue { background: var(--brand-soft); color: var(--brand); }
 
-/* ---------- Table ---------- */
 .table-wrap { overflow-x: auto; }
 table.data { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.data thead th {
@@ -168,7 +157,6 @@ table.data tbody tr { transition: background 0.12s; }
 table.data tbody tr:hover { background: var(--brand-soft); }
 .mono { font-family: 'SF Mono', ui-monospace, 'Cascadia Code', Menlo, monospace; font-size: 13px; }
 
-/* ---------- Alerts ---------- */
 .alert {
   display: flex;
   align-items: flex-start;
@@ -183,7 +171,6 @@ table.data tbody tr:hover { background: var(--brand-soft); }
 .alert-success { background: var(--green-soft); color: #14733a; border: 1px solid #c6ecd3; }
 .alert-info { background: var(--brand-soft); color: #1a4bb0; border: 1px solid #cfdffb; }
 
-/* ---------- Layout helpers ---------- */
 .row { display: flex; align-items: center; }
 .between { justify-content: space-between; }
 .gap-8 { gap: 8px; } .gap-12 { gap: 12px; } .gap-16 { gap: 16px; }
@@ -193,7 +180,6 @@ table.data tbody tr:hover { background: var(--brand-soft); }
 .faint { color: var(--text-faint); }
 .text-sm { font-size: 13px; }
 
-/* ---------- Spinner ---------- */
 .spinner {
   width: 16px; height: 16px;
   border: 2px solid rgba(255,255,255,0.45);
@@ -204,14 +190,12 @@ table.data tbody tr:hover { background: var(--brand-soft); }
 .spinner-brand { border-color: var(--brand-soft); border-top-color: var(--brand); }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ---------- Animations ---------- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .fade-up { animation: fadeUp 0.32s ease both; }
 
-/* ---------- Empty state ---------- */
 .empty {
   text-align: center;
   padding: 46px 20px;
