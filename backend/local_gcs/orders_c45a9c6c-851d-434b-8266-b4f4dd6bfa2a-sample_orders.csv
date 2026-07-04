@@ -1,4 +1,0 @@
-order_id,customer_id,order_date,order_amount,status
-,cust_1,2024-01-01,100.50,completed
-,cust_2,2024-01-02,200.75,pending
-,cust_3,not-a-date,50.00,completed

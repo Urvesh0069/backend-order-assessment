@@ -3,7 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import { uploadFileToGCS } from '../config/gcs';
 import { processOrdersFile } from './orders.service';
-import { findOrderById, findOrdersByCustomerId } from './orders.repository';
+import { logger } from '../config/logger';
+import {
+  findOrderById,
+  findOrdersByCustomerId,
+  findAllOrders,
+} from './orders.repository';
 
 export async function uploadOrders(req: Request, res: Response) {
   if (!req.file) {
@@ -15,13 +20,12 @@ export async function uploadOrders(req: Request, res: Response) {
   const destinationName = `orders/${batchId}-${req.file.originalname}`;
 
   try {
-    console.log(`[upload] start batch=${batchId} file=${req.file.originalname}`);
-    const gcsPath = await uploadFileToGCS(localPath, destinationName);
-    console.log(`[upload] complete batch=${batchId} gcsPath=${gcsPath}`);
+    logger.info('upload start', { batchId, file: req.file.originalname, size: req.file.size });
 
-    console.log(`[process] start batch=${batchId}`);
+    const gcsPath = await uploadFileToGCS(localPath, destinationName);
+    logger.info('upload to storage complete', { batchId, gcsPath });
+
     const result = await processOrdersFile(localPath, batchId);
-    console.log(`[process] complete batch=${batchId}`, result);
 
     fs.unlinkSync(localPath);
 
@@ -32,14 +36,14 @@ export async function uploadOrders(req: Request, res: Response) {
       ...result,
     });
   } catch (err) {
-    console.error(`[upload] failed batch=${batchId}`, err);
+    logger.error('upload failed', { batchId, error: (err as Error).message });
     if (fs.existsSync(localPath)) fs.unlinkSync(localPath);
     return res.status(500).json({ error: 'Upload or processing failed' });
   }
 }
 
 export async function getOrderById(req: Request, res: Response) {
-  const orderId = req.params.order_id;
+  const orderId = req.params.orderId;
 
   if (!orderId || typeof orderId !== 'string') {
     return res.status(400).json({ error: 'orderId param is required' });
@@ -52,14 +56,19 @@ export async function getOrderById(req: Request, res: Response) {
 }
 
 export async function getOrdersByCustomer(req: Request, res: Response) {
-  const { customerId } = req.query;
+  const { customerId, limit } = req.query;
 
-  if (!customerId || typeof customerId !== 'string') {
-    return res.status(400).json({ error: 'customerId query param is required' });
+  if (customerId) {
+    if (typeof customerId !== 'string') {
+      return res.status(400).json({ error: 'customerId must be a string' });
+    }
+    const orders = await findOrdersByCustomerId(customerId);
+    return res.status(200).json({ customerId, count: orders.length, orders });
   }
 
-  const orders = await findOrdersByCustomerId(customerId);
-  return res.status(200).json({ customerId, count: orders.length, orders });
+  const parsedLimit = Math.min(parseInt(String(limit ?? '100'), 10) || 100, 1000);
+  const orders = await findAllOrders(parsedLimit);
+  return res.status(200).json({ count: orders.length, limit: parsedLimit, orders });
 }
 
 export default getOrderById;

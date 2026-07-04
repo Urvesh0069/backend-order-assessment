@@ -1,12 +1,19 @@
 import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 import { requireAuth } from '../auth/auth.middleware';
 import { uploadOrders, getOrderById, getOrdersByCustomer } from './orders.controller';
 
+const UPLOAD_DIR = path.join(process.cwd(), 'tmp_uploads');
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+
 const upload = multer({
   storage: multer.diskStorage({
-    destination: (_req, _file, cb) => cb(null, 'tmp_uploads/'),
+    destination: (_req, _file, cb) => {
+      fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+      cb(null, UPLOAD_DIR);
+    },
     filename: (_req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
   }),
   fileFilter: (_req, file, cb) => {

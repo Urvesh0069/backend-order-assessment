@@ -27,13 +27,12 @@ function buildShardConfig(index: number): PoolConfig {
     user,
     password,
     database,
-    max: 10, // max connections in pool per shard
+    max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
   };
 }
 
-// One Pool per shard, indexed 0..SHARD_COUNT-1
 const shardPools: Pool[] = [];
 
 for (let i = 0; i < SHARD_COUNT; i++) {
@@ -58,8 +57,6 @@ export function getPoolByShardId(shardId: number): Pool {
   return shardPools[shardId]!;
 }
 
-// Used for auth/users table — not sharded, always lives on shard 0
-// (or split into its own dedicated pool if you prefer a separate users DB)
 export function getUsersPool(): Pool {
   const pool = shardPools[0];
   if (!pool) {
@@ -68,7 +65,6 @@ export function getUsersPool(): Pool {
   return pool;
 }
 
-// Quick connectivity check — call this once on server startup
 export async function verifyShardConnections(): Promise<void> {
   for (let i = 0; i < shardPools.length; i++) {
     try {

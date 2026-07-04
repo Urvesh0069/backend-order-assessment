@@ -1,0 +1,124 @@
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-top { display: flex; align-items: center; justify-content: space-between; }
+.stat-ico {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
+}
+.stat-ico.blue { background: var(--brand-soft); color: var(--brand); }
+.stat-ico.green { background: var(--green-soft); color: var(--green); }
+.stat-ico.red { background: var(--red-soft); color: var(--red); }
+.stat-ico.violet { background: var(--violet-soft); color: var(--violet); }
+.stat-value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-top: 12px; }
+.stat-label { color: var(--text-muted); font-size: 13.5px; margin-top: 2px; }
+
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.qa-card {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.qa-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--border-strong); text-decoration: none; }
+.qa-ico {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand);
+}
+.qa-title { font-weight: 650; font-size: 16px; }
+.qa-desc { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; }
+.qa-arrow { margin-top: auto; color: var(--brand); font-weight: 600; font-size: 13.5px; display: inline-flex; align-items: center; gap: 5px; }
+
+.section-title { font-size: 17px; font-weight: 650; margin-bottom: 14px; }
+
+.dropzone {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  padding: 46px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.dropzone:hover { border-color: var(--brand); background: var(--brand-soft); }
+.dropzone.drag { border-color: var(--brand); background: var(--brand-soft); transform: scale(1.005); }
+.dropzone .dz-ico {
+  width: 58px; height: 58px; border-radius: 15px; margin: 0 auto 16px;
+  background: var(--brand-soft); color: var(--brand);
+  display: grid; place-items: center;
+}
+.dropzone h3 { font-size: 17px; }
+.dropzone p { color: var(--text-muted); margin-top: 6px; font-size: 14px; }
+.dz-formats { margin-top: 14px; display: inline-flex; gap: 8px; }
+.chip {
+  font-size: 12px; font-weight: 600; padding: 4px 10px;
+  border-radius: 7px; background: var(--slate-soft); color: var(--slate);
+}
+
+.file-preview {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface);
+}
+.file-preview .fp-ico {
+  width: 44px; height: 44px; border-radius: 11px;
+  background: var(--brand-soft); color: var(--brand);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.file-name { font-weight: 600; }
+.file-meta { color: var(--text-faint); font-size: 13px; }
+
+.progress { height: 8px; border-radius: 999px; background: var(--slate-soft); overflow: hidden; }
+.progress > span { display: block; height: 100%; background: var(--brand); border-radius: 999px; transition: width 0.2s ease; }
+
+.lookup-bar { display: flex; gap: 10px; }
+.lookup-bar .input { flex: 1; }
+@media (max-width: 560px) { .lookup-bar { flex-direction: column; } }
+
+.kv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.kv {
+  background: var(--surface);
+  padding: 16px 18px;
+}
+.kv-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-faint); font-weight: 600; }
+.kv-value { font-size: 16px; font-weight: 600; margin-top: 6px; }
+
+.summary-strip {
+  display: flex; flex-wrap: wrap; gap: 22px;
+  padding: 16px 20px;
+  background: var(--brand-soft);
+  border: 1px solid #d5e2fb;
+  border-radius: var(--radius);
+}
+.summary-strip .si-value { font-size: 22px; font-weight: 700; }
+.summary-strip .si-label { font-size: 12.5px; color: var(--text-muted); }
